@@ -12,4 +12,6 @@ module com.example.miniprojet {
 
     opens com.example.miniprojet to javafx.fxml;
     exports com.example.miniprojet;
+    exports com.example.miniprojet.models;
+    opens com.example.miniprojet.models to javafx.fxml;
 }
