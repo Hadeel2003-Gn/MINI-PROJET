@@ -1,0 +1,147 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.geometry.Insets?>
+
+<BorderPane xmlns="http://javafx.com/javafx/21.0.6"
+            xmlns:fx="http://javafx.com/fxml/1"
+            fx:controller="com.example.tp1gd.LivreController"
+            style="-fx-background-color: #f5f5f5;">
+
+    <!-- EN-TÊTE AVEC AUTHENTIFICATION -->
+    <top>
+        <VBox spacing="10" style="-fx-background-color: #2196F3; -fx-padding: 15;">
+            <!-- Titre et boutons de connexion -->
+            <HBox spacing="15" alignment="CENTER_LEFT">
+                <Label text="📚 Gestion des Livres" style="-fx-font-size: 24px; -fx-font-weight: bold; -fx-text-fill: white;"/>
+                <Region HBox.hgrow="ALWAYS"/>
+
+                <!-- Zone d'authentification -->
+                <Label fx:id="lblUtilisateurConnecte" text="👤 Non connecté - Mode Lecture Seule"
+                       style="-fx-font-size: 14px; -fx-text-fill: #FFEB3B; -fx-font-weight: bold; -fx-background-color: rgba(0,0,0,0.2); -fx-padding: 5 10; -fx-background-radius: 5;"/>
+
+                <Button fx:id="btnLogin" text="🔐 Se connecter" onAction="#onLogin"
+                        style="-fx-background-color: #4CAF50; -fx-text-fill: white; -fx-font-weight: bold; -fx-cursor: hand; -fx-padding: 8 15;"
+                        prefHeight="35"/>
+
+                <Button fx:id="btnLogout" text="🚪 Déconnexion" onAction="#onLogout"
+                        style="-fx-background-color: #F44336; -fx-text-fill: white; -fx-font-weight: bold; -fx-cursor: hand; -fx-padding: 8 15;"
+                        visible="false" managed="false" prefHeight="35"/>
+            </HBox>
+
+            <!-- Statistiques -->
+            <HBox spacing="15" alignment="CENTER_LEFT">
+                <Label fx:id="lblTotalLivres" text="📚 Total: 0" style="-fx-font-size: 14px; -fx-text-fill: white; -fx-font-weight: bold;"/>
+                <Label fx:id="lblLivresDisponibles" text="🟢 Disponibles: 0" style="-fx-font-size: 14px; -fx-text-fill: white;"/>
+                <Label fx:id="lblLivresEmpruntes" text="🔴 Empruntés: 0" style="-fx-font-size: 14px; -fx-text-fill: white;"/>
+            </HBox>
+        </VBox>
+    </top>
+
+    <!-- CONTENU PRINCIPAL -->
+    <center>
+        <VBox spacing="15" style="-fx-padding: 15;">
+
+            <!-- FORMULAIRE D'AJOUT/MODIFICATION - VERSION COMPACTE -->
+            <TitledPane text="📝 Formulaire Livre (Réservé aux administrateurs)" expanded="false" collapsible="true" style="-fx-font-weight: bold;" maxHeight="400">
+                <VBox fx:id="vboxFormulaire" spacing="10" style="-fx-padding: 10; -fx-background-color: white;">
+
+                    <!-- Informations Principales - COMPACTE -->
+                    <GridPane hgap="10" vgap="8">
+                        <padding><Insets top="5"/></padding>
+
+                        <!-- Ligne 1 -->
+                        <Label text="Titre *" GridPane.rowIndex="0" GridPane.columnIndex="0" style="-fx-font-weight: bold;"/>
+                        <TextField fx:id="txtTitreLivre" promptText="Titre du livre" GridPane.rowIndex="0" GridPane.columnIndex="1" GridPane.columnSpan="5" prefWidth="600"/>
+
+                        <!-- Ligne 2 -->
+                        <Label text="Auteur *" GridPane.rowIndex="1" GridPane.columnIndex="0" style="-fx-font-weight: bold;"/>
+                        <TextField fx:id="txtAuteurLivre" promptText="Nom de l'auteur" GridPane.rowIndex="1" GridPane.columnIndex="1" GridPane.columnSpan="3" prefWidth="350"/>
+
+                        <Label text="Année *" GridPane.rowIndex="1" GridPane.columnIndex="4" style="-fx-font-weight: bold;"/>
+                        <TextField fx:id="txtAnneeLivre" promptText="2024" GridPane.rowIndex="1" GridPane.columnIndex="5" prefWidth="80"/>
+
+                        <!-- Ligne 3 -->
+                        <Label text="Langue" GridPane.rowIndex="2" GridPane.columnIndex="0" style="-fx-font-weight: bold;"/>
+                        <ComboBox fx:id="comboLangue" GridPane.rowIndex="2" GridPane.columnIndex="1" prefWidth="120"/>
+
+                        <Label text="Copies" GridPane.rowIndex="2" GridPane.columnIndex="2" style="-fx-font-weight: bold;"/>
+                        <Spinner fx:id="spinnerCopies" GridPane.rowIndex="2" GridPane.columnIndex="3" prefWidth="80"/>
+
+                        <Label text="Genre" GridPane.rowIndex="2" GridPane.columnIndex="4" style="-fx-font-weight: bold;"/>
+                        <TextField fx:id="txtGenre" promptText="Fantasy" GridPane.rowIndex="2" GridPane.columnIndex="5" prefWidth="120"/>
+
+                        <!-- Ligne 4 -->
+                        <Label text="ISBN" GridPane.rowIndex="3" GridPane.columnIndex="0" style="-fx-font-weight: bold;"/>
+                        <TextField fx:id="txtISBN" promptText="978-XXX" GridPane.rowIndex="3" GridPane.columnIndex="1" prefWidth="150"/>
+
+                        <Label text="Pages" GridPane.rowIndex="3" GridPane.columnIndex="2" style="-fx-font-weight: bold;"/>
+                        <TextField fx:id="txtPages" promptText="350" GridPane.rowIndex="3" GridPane.columnIndex="3" prefWidth="80"/>
+
+                        <Label text="Éditeur" GridPane.rowIndex="3" GridPane.columnIndex="4" style="-fx-font-weight: bold;"/>
+                        <TextField fx:id="txtEditeur" promptText="Nom éditeur" GridPane.rowIndex="3" GridPane.columnIndex="5" prefWidth="150"/>
+                    </GridPane>
+
+                    <!-- Informations Personnalisées - COMPACTE -->
+                    <VBox spacing="5">
+                        <Label text="➕ Infos Personnalisées " style="-fx-font-size: 11px; -fx-text-fill: gray;"/>
+                        <TextArea fx:id="txtNouvellesInfos" promptText="Prix: 25€&#10;Note: 4.5/5" prefRowCount="2" wrapText="true" style="-fx-font-size: 11px;"/>
+                    </VBox>
+
+                </VBox>
+            </TitledPane>
+
+            <!-- BOUTONS D'ACTION PRINCIPAUX -->
+            <HBox fx:id="hboxBoutonsActions" spacing="15" alignment="CENTER" style="-fx-padding: 15; -fx-background-color: white; -fx-border-color: #ddd; -fx-border-radius: 5;">
+                <Button text="➕ Ajouter Nouveau" onAction="#onAjouterLivre" prefWidth="160" prefHeight="45" style="-fx-background-color: #4CAF50; -fx-text-fill: white; -fx-font-size: 14px; -fx-font-weight: bold; -fx-cursor: hand;"/>
+                <Button text="✏️ Modifier" onAction="#onModifierLivre" prefWidth="160" prefHeight="45" style="-fx-background-color: #FF9800; -fx-text-fill: white; -fx-font-size: 14px; -fx-font-weight: bold; -fx-cursor: hand;"/>
+                <Button text="💾 Enregistrer" onAction="#onSauvegarderLivre" prefWidth="160" prefHeight="45" style="-fx-background-color: #2196F3; -fx-text-fill: white; -fx-font-size: 14px; -fx-font-weight: bold; -fx-cursor: hand;"/>
+                <Button text="🗑️ Supprimer" onAction="#onSupprimerLivre" prefWidth="160" prefHeight="45" style="-fx-background-color: #f44336; -fx-text-fill: white; -fx-font-size: 14px; -fx-font-weight: bold; -fx-cursor: hand;"/>
+                <Button text="🔄 Réinitialiser" onAction="#onReinitialiser" prefWidth="160" prefHeight="45" style="-fx-background-color: #607D8B; -fx-text-fill: white; -fx-font-size: 14px; -fx-font-weight: bold; -fx-cursor: hand;"/>
+            </HBox>
+
+            <!-- TABLEAU DES LIVRES -->
+            <VBox spacing="10" VBox.vgrow="ALWAYS">
+                <HBox spacing="10" alignment="CENTER_LEFT">
+                    <Label text="📚 Liste des Livres" style="-fx-font-weight: bold; -fx-font-size: 16px;"/>
+                    <Region HBox.hgrow="ALWAYS"/>
+                    <TextField fx:id="txtRecherche" promptText="🔍 Rechercher un livre..." prefWidth="300" style="-fx-font-size: 13px;"/>
+                    <Button text="🔄 Actualiser" onAction="#onActualiser" style="-fx-background-color: #2196F3; -fx-text-fill: white; -fx-font-weight: bold; -fx-cursor: hand;"/>
+                    <!-- 🔥 SUPPRESSION : Bouton Réimporter CSV retiré -->
+                </HBox>
+
+                <TableView fx:id="tableLivres" VBox.vgrow="ALWAYS" style="-fx-background-color: white;">
+                    <columns>
+                        <TableColumn text="Titre" fx:id="colTitre" prefWidth="250" style="-fx-font-weight: bold;"/>
+                        <TableColumn text="Auteur" fx:id="colAuteur" prefWidth="180"/>
+                        <TableColumn text="Année" fx:id="colAnnee" prefWidth="80"/>
+                        <TableColumn text="Langue" fx:id="colLangue" prefWidth="90"/>
+                        <TableColumn text="Total" fx:id="colTotalCopies" prefWidth="70"/>
+                        <TableColumn text="Disponibles" fx:id="colCopiesDisponibles" prefWidth="100"/>
+                        <TableColumn text="Empruntées" fx:id="colCopiesEmpruntees" prefWidth="100"/>
+                        <TableColumn text="ISBN" fx:id="colISBN" prefWidth="150"/>
+                        <TableColumn text="Pages" fx:id="colPages" prefWidth="80"/>
+                        <TableColumn text="Genre" fx:id="colGenre" prefWidth="120"/>
+                        <TableColumn text="Éditeur" fx:id="colEditeur" prefWidth="150"/>
+                    </columns>
+                    <placeholder>
+                        <Label text="📭 Aucun livre disponible. Cliquez sur 'Actualiser' pour charger les livres." style="-fx-font-size: 14px; -fx-text-fill: gray;"/>
+                    </placeholder>
+                </TableView>
+
+                <HBox spacing="10" alignment="CENTER_RIGHT">
+                    <Label fx:id="lblSelection" text="Aucune sélection" style="-fx-font-size: 12px; -fx-text-fill: gray;"/>
+                </HBox>
+            </VBox>
+
+        </VBox>
+    </center>
+
+    <!-- PIED DE PAGE -->
+    <bottom>
+        <HBox alignment="CENTER" style="-fx-background-color: #37474F; -fx-padding: 10;">
+            <Label text="🔐 Connectez-vous pour modifier les livres | 💡 Double-cliquez sur une ligne pour voir les détails" style="-fx-text-fill: white; -fx-font-size: 11px;"/>
+        </HBox>
+    </bottom>
+
+</BorderPane>
